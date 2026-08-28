@@ -1,0 +1,46 @@
+name: Build y Release HolaMundo
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Instalar Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: x86_64-pc-windows-msvc
+          override: true
+
+      - name: Compilar en modo release
+        run: cargo build --release
+
+      - name: Instalar Inno Setup
+        run: choco install innosetup -y
+
+      - name: Generar instalador
+        run: ISCC.exe instalador.iss
+
+      - name: Subir artefactos
+        uses: actions/upload-artifact@v4
+        with:
+          name: HolaMundo-Windows
+          path: |
+            target/release/holamundo.exe
+            instalador_salida/HolaMundo_Setup.exe
+
+      - name: Crear Release en GitHub
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            target/release/holamundo.exe
+            instalador_salida/HolaMundo_Setup.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

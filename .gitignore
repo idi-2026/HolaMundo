@@ -1,0 +1,4 @@
+/target
+instalador_salida/
+Cargo.lock
+*.pdb
