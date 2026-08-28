@@ -8,13 +8,14 @@ OutputBaseFilename=HolaMundo_Setup
 Compression=lzma
 SolidCompression=yes
 ArchitecturesInstallIn64BitMode=x64
+SetupIconFile=idi-2026.ico
 
 [Files]
 Source: "target\release\holamundo.exe"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
-Name: "{group}\HolaMundo"; Filename: "{app}\holamundo.exe"
-Name: "{autodesktop}\HolaMundo"; Filename: "{app}\holamundo.exe"
+Name: "{group}\HolaMundo"; Filename: "{app}\holamundo.exe"; IconFilename: "{app}\holamundo.exe"
+Name: "{autodesktop}\HolaMundo"; Filename: "{app}\holamundo.exe"; IconFilename: "{app}\holamundo.exe"
 
 [Run]
 Filename: "{app}\holamundo.exe"; Description: "Ejecutar HolaMundo"; Flags: nowait postinstall skipifsilent
